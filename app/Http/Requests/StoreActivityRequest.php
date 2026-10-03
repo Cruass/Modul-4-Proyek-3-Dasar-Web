@@ -20,14 +20,17 @@ class StoreActivityRequest extends FormRequest
      *
      * @return array<string, ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+   public function rules(): array
     {
         return [
-            'title' => 'required|string|min:5|max:100',
-
-            'activity_date' => 'required|date',
-
-            'status' => 'required|in:Planned,Ongoing,Done',
+            // Dua baris ini wajib ada agar data dari form tidak dibuang
+            'code' => ['required', 'string', 'max:30', 'unique:activities,code'],
+            'category_id' => ['required', 'exists:categories,id'],
+            
+            // Tiga baris ini adalah yang sudah berhasil lolos tadi
+            'title' => ['required', 'string', 'min:5', 'max:255'],
+            'activity_date' => ['required', 'date'],
+            'status' => ['required', 'in:Draft,Published,Completed'],
         ];
     }
 }

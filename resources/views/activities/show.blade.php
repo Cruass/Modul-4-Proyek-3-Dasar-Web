@@ -13,6 +13,9 @@
        {{ $activity->description ?? 'Tidak ada deskripsi.' }}
     </p>
 
+  <p><strong>Kategori:</strong> {{ $activity->category->name ?? '-' }}</p>
+
     <br>
+    <a href="{{ route('activities.edit', $activity->id) }}">Edit Kegiatan</a> | 
     <a href="{{ route('activities.index') }}">← Kembali ke Daftar</a>
 @endsection

@@ -21,11 +21,35 @@
         @csrf
         
         <div>
+    <label for="code">Kode Kegiatan (Unik):</label><br>
+    <input type="text" name="code" id="code" value="{{ old('code') }}" required>
+    @error('code')
+        <div style="color: red;">{{ $message }}</div>
+    @enderror
+    </div>
+    <br>
+
+        <div>
             <label>Judul Kegiatan (Min 5 Karakter):</label><br>
             <input type="text" name="title" value="{{ old('title') }}" required>
         </div>
         <br>
         
+        <div>
+    <label for="category_id">Kategori:</label>
+    <select name="category_id" id="category_id" required>
+        <option value="">-- Pilih Kategori --</option>
+        @foreach($categories as $category)
+            <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                {{ $category->name }}
+            </option>
+        @endforeach
+    </select>
+    @error('category_id')
+        <div style="color: red;">{{ $message }}</div>
+    @enderror
+</div>
+
         <div>
             <label>Tanggal Kegiatan:</label><br>
             <input type="date" name="activity_date" value="{{ old('activity_date') }}" required>
@@ -34,11 +58,11 @@
         
         <div>
             <label>Status:</label><br>
-            <select name="status" required>
-                <option value="Planned" {{ old('status') == 'Planned' ? 'selected' : '' }}>Planned</option>
-                <option value="Ongoing" {{ old('status') == 'Ongoing' ? 'selected' : '' }}>Ongoing</option>
-                <option value="Done" {{ old('status') == 'Done' ? 'selected' : '' }}>Done</option>
-            </select>
+           <select name="status">
+            <option value="Draft">Draft</option>
+            <option value="Published">Published</option>
+            <option value="Completed">Completed</option>
+           </select>
         </div>
         <br>
         

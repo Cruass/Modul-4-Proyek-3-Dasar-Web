@@ -12,7 +12,7 @@ class UpdateActivityRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +23,11 @@ class UpdateActivityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'code' => ['required', 'string', 'max:30', 'unique:activities,code,' . $this->activity->id],
+            'category_id' => ['required', 'exists:categories,id'],
+            'title' => ['required', 'string', 'min:5', 'max:255'],
+            'activity_date' => ['required', 'date'],
+            'status' => ['required', 'in:Draft,Published,Completed'],
         ];
     }
 }
